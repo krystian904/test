@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1> dziala </h1>\n<ul>\n   <li *ngFor=\"let item of items | async\">\n     <input type=\"text\" #updatetext [value]=\"item.text\" />\n     <button (click)=\"updateItem(item.key, updatetext.value)\">Update</button>\n     <button (click)=\"deleteItem(item.key)\">Delete</button>\n   </li>\n </ul>\n <input type=\"text\" #newitem />\n <button (click)=\"addItem(newitem.value)\">Add</button>\n <button (click)=\"deleteEverything()\">Delete All</button>\n"
+module.exports = "<ul>\n    <li *ngFor=\"let item of items | async\">\n       {{ item | json }}\n    </li>\n  </ul>\n<h1>{{ item | async | json }}</h1>\n\n  <input type=\"text\" #newname placeholder=\"Name\" />\n\n  <br />\n  <button (click)=\"save(newname.value)\">Set Name</button>\n"
 
 /***/ }),
 
@@ -57,15 +57,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var angularfire2_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/database */ "./node_modules/angularfire2/database/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-var __assign = (undefined && undefined.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -77,26 +68,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-
 var AppComponent = /** @class */ (function () {
-    function AppComponent(db) {
-        this.itemsRef = db.list('messages');
-        // Use snapshotChanges().map() to store the key
-        this.items = this.itemsRef.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (changes) {
-            return changes.map(function (c) { return (__assign({ key: c.payload.key }, c.payload.val())); });
-        }));
+    function AppComponent(afDb) {
+        this.afDb = afDb;
+        this.items = afDb.list('krystian').valueChanges();
     }
-    AppComponent.prototype.addItem = function (newName) {
-        this.itemsRef.push({ text: newName });
-    };
-    AppComponent.prototype.updateItem = function (key, newText) {
-        this.itemsRef.update(key, { text: newText });
-    };
-    AppComponent.prototype.deleteItem = function (key) {
-        this.itemsRef.remove(key);
-    };
-    AppComponent.prototype.deleteEverything = function () {
-        this.itemsRef.remove();
+    AppComponent.prototype.save = function (s) {
+        var afList = this.afDb.list('krystian');
+        afList.push({ name: s });
+        var listObservable = afList.snapshotChanges();
+        listObservable.subscribe();
+        console.log(s);
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -125,12 +107,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var angularfire2_database__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2/database */ "./node_modules/angularfire2/database/index.js");
-/* harmony import */ var angularfire2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angularfire2 */ "./node_modules/angularfire2/index.js");
-/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
-/* harmony import */ var angularfire2_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! angularfire2/storage */ "./node_modules/angularfire2/storage/index.js");
-/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var angularfire2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2 */ "./node_modules/angularfire2/index.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
+/* harmony import */ var angularfire2_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angularfire2/storage */ "./node_modules/angularfire2/storage/index.js");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var angularfire2_database__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angularfire2/database */ "./node_modules/angularfire2/database/index.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -156,12 +138,12 @@ var AppModule = /** @class */ (function () {
                 _app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]
             ],
             imports: [
-                angularfire2_database__WEBPACK_IMPORTED_MODULE_2__["AngularFireDatabaseModule"],
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                angularfire2__WEBPACK_IMPORTED_MODULE_3__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].firebase),
-                angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4__["AngularFirestoreModule"],
-                angularfire2_auth__WEBPACK_IMPORTED_MODULE_6__["AngularFireAuthModule"],
-                angularfire2_storage__WEBPACK_IMPORTED_MODULE_5__["AngularFireStorageModule"] // imports firebase/storage only needed for storage features
+                angularfire2__WEBPACK_IMPORTED_MODULE_2__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].firebase),
+                angularfire2_firestore__WEBPACK_IMPORTED_MODULE_3__["AngularFirestoreModule"],
+                angularfire2_auth__WEBPACK_IMPORTED_MODULE_5__["AngularFireAuthModule"],
+                angularfire2_storage__WEBPACK_IMPORTED_MODULE_4__["AngularFireStorageModule"],
+                angularfire2_database__WEBPACK_IMPORTED_MODULE_7__["AngularFireDatabaseModule"]
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
@@ -190,12 +172,12 @@ __webpack_require__.r(__webpack_exports__);
 var environment = {
     production: false,
     firebase: {
-        apiKey: "AIzaSyB2XmlljqSkXt98SUgTqFtjrAvYyC6Eqwg",
-        authDomain: "angielski-32159.firebaseapp.com",
-        databaseURL: "https://angielski-32159.firebaseio.com",
-        projectId: "angielski-32159",
-        storageBucket: "angielski-32159.appspot.com",
-        messagingSenderId: "1047939767386"
+        apiKey: 'AIzaSyB2XmlljqSkXt98SUgTqFtjrAvYyC6Eqwg',
+        authDomain: 'angielski-32159.firebaseapp.com',
+        databaseURL: 'https://angielski-32159.firebaseio.com',
+        projectId: 'angielski-32159',
+        storageBucket: 'angielski-32159.appspot.com',
+        messagingSenderId: '1047939767386'
     }
 };
 /*

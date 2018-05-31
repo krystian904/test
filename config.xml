@@ -14,5 +14,7 @@
 	<plugin name="cordova-plugin-device" spec="2.0.1" />
 	<plugin name="cordova-plugin-dialogs" spec="2.0.1" />
 	<plugin name="cordova-plugin-vibration" spec="3.1.0" />
+	<plugin name="cordova-plugin-http" />
+
 
 </widget>

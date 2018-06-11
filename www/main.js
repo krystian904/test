@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<h1>angielski test</h1>\n<app-youtube></app-youtube>\n<app-dbtest></app-dbtest>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<h1>angielski test</h1>\n\n<app-auth ></app-auth>\n"
 
 /***/ }),
 
@@ -105,6 +105,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angularfire2_storage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! angularfire2/storage */ "./node_modules/angularfire2/storage/index.js");
 /* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _comp_auth_auth_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./comp/auth/auth.component */ "./src/app/comp/auth/auth.component.ts");
+/* harmony import */ var _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./comp/quiz/quiz.component */ "./src/app/comp/quiz/quiz.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -127,6 +129,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -135,7 +139,9 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
                 _comp_youtube_youtube_component__WEBPACK_IMPORTED_MODULE_6__["YoutubeComponent"],
-                _comp_dbtest_dbtest_component__WEBPACK_IMPORTED_MODULE_7__["DbtestComponent"]
+                _comp_dbtest_dbtest_component__WEBPACK_IMPORTED_MODULE_7__["DbtestComponent"],
+                _comp_auth_auth_component__WEBPACK_IMPORTED_MODULE_14__["AuthComponent"],
+                _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__["QuizComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -156,6 +162,93 @@ var AppModule = /** @class */ (function () {
 }());
 
 Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_4__["platformBrowserDynamic"])().bootstrapModule(AppModule);
+
+
+/***/ }),
+
+/***/ "./src/app/comp/auth/auth.component.css":
+/*!**********************************************!*\
+  !*** ./src/app/comp/auth/auth.component.css ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/comp/auth/auth.component.html":
+/*!***********************************************!*\
+  !*** ./src/app/comp/auth/auth.component.html ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  auth works!\n</p>\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n  <ng-template #showLogin>\n    <p>Please login.</p>\n    <button (click)=\"doGoogleLogin()\">Login with Google</button>\n  </ng-template>\n"
+
+/***/ }),
+
+/***/ "./src/app/comp/auth/auth.component.ts":
+/*!*********************************************!*\
+  !*** ./src/app/comp/auth/auth.component.ts ***!
+  \*********************************************/
+/*! exports provided: AuthComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthComponent", function() { return AuthComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.cjs.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_2__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AuthComponent = /** @class */ (function () {
+    function AuthComponent(afAuth) {
+        this.afAuth = afAuth;
+    }
+    AuthComponent.prototype.doGoogleLogin = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var provider = new firebase_app__WEBPACK_IMPORTED_MODULE_2__["auth"].GoogleAuthProvider();
+            provider.addScope('profile');
+            provider.addScope('email');
+            _this.afAuth.auth
+                .signInWithPopup(provider)
+                .then(function (res) {
+                resolve(res);
+                _this.isLogin = true;
+                console.log(_this.isLogin);
+            });
+        });
+    };
+    AuthComponent.prototype.logout = function () {
+        this.afAuth.auth.signOut();
+        this.isLogin = false;
+        console.log(this.isLogin);
+    };
+    AuthComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-auth',
+            template: __webpack_require__(/*! ./auth.component.html */ "./src/app/comp/auth/auth.component.html"),
+            styles: [__webpack_require__(/*! ./auth.component.css */ "./src/app/comp/auth/auth.component.css")]
+        }),
+        __metadata("design:paramtypes", [angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__["AngularFireAuth"]])
+    ], AuthComponent);
+    return AuthComponent;
+}());
+
 
 
 /***/ }),
@@ -246,6 +339,69 @@ var DbtestComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [angularfire2_database__WEBPACK_IMPORTED_MODULE_1__["AngularFireDatabase"]])
     ], DbtestComponent);
     return DbtestComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/comp/quiz/quiz.component.css":
+/*!**********************************************!*\
+  !*** ./src/app/comp/quiz/quiz.component.css ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/comp/quiz/quiz.component.html":
+/*!***********************************************!*\
+  !*** ./src/app/comp/quiz/quiz.component.html ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  quiz works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/comp/quiz/quiz.component.ts":
+/*!*********************************************!*\
+  !*** ./src/app/comp/quiz/quiz.component.ts ***!
+  \*********************************************/
+/*! exports provided: QuizComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuizComponent", function() { return QuizComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var QuizComponent = /** @class */ (function () {
+    function QuizComponent() {
+    }
+    QuizComponent.prototype.ngOnInit = function () {
+    };
+    QuizComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-quiz',
+            template: __webpack_require__(/*! ./quiz.component.html */ "./src/app/comp/quiz/quiz.component.html"),
+            styles: [__webpack_require__(/*! ./quiz.component.css */ "./src/app/comp/quiz/quiz.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], QuizComponent);
+    return QuizComponent;
 }());
 
 

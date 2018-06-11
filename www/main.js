@@ -184,7 +184,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  auth works!\n</p>\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n  <ng-template #showLogin>\n    <p>Please login.</p>\n    <button (click)=\"doGoogleLogin()\">Login with Google</button>\n  </ng-template>\n"
+module.exports = "<p>\n  auth works!\n</p>\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"exampleInputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" [(ngModel)]=\"user.email\" placeholder=\"Email\" required>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"exampleInputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" [(ngModel)]=\"user.password\" placeholder=\"Password\" required>\n  </div>\n  <div class=\"form-group\">\n   <button type=\"buton\" class=\"btn btn-primary btn-block\" style=\"margin-bottom: 20px\" (click)=\"signInWithEmail()\" [disabled]=\"formCtrl.form.invalid\">\n\n   Login with Email\n\n   </button>\n</div>\n"
 
 /***/ }),
 
@@ -217,6 +217,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AuthComponent = /** @class */ (function () {
     function AuthComponent(afAuth) {
         this.afAuth = afAuth;
+        this.user = {
+            email: '',
+            password: ''
+        };
     }
     AuthComponent.prototype.doGoogleLogin = function () {
         var _this = this;
@@ -237,6 +241,17 @@ var AuthComponent = /** @class */ (function () {
         this.afAuth.auth.signOut();
         this.isLogin = false;
         console.log(this.isLogin);
+    };
+    AuthComponent.prototype.signInWithEmail = function () {
+        this.afAuth
+            .auth
+            .signInWithEmailAndPassword(this.user.email, this.user.password)
+            .then(function (value) {
+            console.log('Nice, it worked!');
+        })
+            .catch(function (err) {
+            console.log('Something went wrong:', err.message);
+        });
     };
     AuthComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

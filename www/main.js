@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<h1>angielski test</h1>\n\n<app-auth ></app-auth>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<h1>angielski test</h1>\n\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <app-quiz></app-quiz>\n    <app-youtube></app-youtube>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n\n<div *ngIf=\"pokaz\">\n  <div class=\"form-group\" >\n    <div class=\"form-group\">\n      <label for=\"exampleInputEmail1\" >Email address</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"user.email\" placeholder=\"Email\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"exampleInputPassword1\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"user.password\" placeholder=\"Password\" required>\n    </div>\n   <button type=\"buton\" class=\"btn btn-primary btn-block\" style=\"margin-bottom: 20px\" (click)=\"signInWithEmail()\" [disabled]=\"formCtrl.form.invalid\">\n\n   Login with Email\n\n     </button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -56,23 +56,52 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(afAuth) {
+        this.afAuth = afAuth;
         this.title = 'app';
+        this.user = {
+            email: '',
+            password: ''
+        };
+        this.pokaz = true;
     }
+    AppComponent.prototype.logout = function () {
+        this.afAuth.auth.signOut();
+        this.pokaz = true;
+    };
+    AppComponent.prototype.signInWithEmail = function () {
+        var _this = this;
+        this.afAuth
+            .auth
+            .signInWithEmailAndPassword(this.user.email, this.user.password)
+            .then(function (value) {
+            console.log('Nice, it worked!');
+            _this.pokaz = false;
+        })
+            .catch(function (err) {
+            console.log('Something went wrong:', err.message);
+        });
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__["AngularFireAuth"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -148,7 +177,6 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 ngx_youtube_player__WEBPACK_IMPORTED_MODULE_3__["YoutubePlayerModule"],
                 angularfire2__WEBPACK_IMPORTED_MODULE_9__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_13__["environment"].firebase),
-                angularfire2__WEBPACK_IMPORTED_MODULE_9__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_13__["environment"].firebase, 'my-app-name'),
                 angularfire2_firestore__WEBPACK_IMPORTED_MODULE_10__["AngularFirestoreModule"],
                 angularfire2_auth__WEBPACK_IMPORTED_MODULE_12__["AngularFireAuthModule"],
                 angularfire2_storage__WEBPACK_IMPORTED_MODULE_11__["AngularFireStorageModule"],
@@ -184,7 +212,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  auth works!\n</p>\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"exampleInputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" [(ngModel)]=\"user.email\" placeholder=\"Email\" required>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"exampleInputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" [(ngModel)]=\"user.password\" placeholder=\"Password\" required>\n  </div>\n  <div class=\"form-group\">\n   <button type=\"buton\" class=\"btn btn-primary btn-block\" style=\"margin-bottom: 20px\" (click)=\"signInWithEmail()\" [disabled]=\"formCtrl.form.invalid\">\n\n   Login with Email\n\n   </button>\n</div>\n"
+module.exports = "<p>\n  auth works!\n</p>\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    \n    <button (click)=\"logout()\">Logout</button>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"exampleInputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" [(ngModel)]=\"user.email\" placeholder=\"Email\" required>\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"exampleInputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" [(ngModel)]=\"user.password\" placeholder=\"Password\" required>\n  </div>\n  <div class=\"form-group\">\n   <button type=\"buton\" class=\"btn btn-primary btn-block\" style=\"margin-bottom: 20px\" (click)=\"signInWithEmail()\" [disabled]=\"formCtrl.form.invalid\">\n\n   Login with Email\n\n   </button>\n</div>\n"
 
 /***/ }),
 
@@ -202,6 +230,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.cjs.js");
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _service_test_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../service/test.service */ "./src/app/service/test.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -214,9 +243,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AuthComponent = /** @class */ (function () {
-    function AuthComponent(afAuth) {
+    function AuthComponent(afAuth, test) {
         this.afAuth = afAuth;
+        this.test = test;
         this.user = {
             email: '',
             password: ''
@@ -240,14 +271,15 @@ var AuthComponent = /** @class */ (function () {
     AuthComponent.prototype.logout = function () {
         this.afAuth.auth.signOut();
         this.isLogin = false;
-        console.log(this.isLogin);
     };
     AuthComponent.prototype.signInWithEmail = function () {
+        var _this = this;
         this.afAuth
             .auth
             .signInWithEmailAndPassword(this.user.email, this.user.password)
             .then(function (value) {
             console.log('Nice, it worked!');
+            _this.test.czyZalogowany = true;
         })
             .catch(function (err) {
             console.log('Something went wrong:', err.message);
@@ -259,7 +291,7 @@ var AuthComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./auth.component.html */ "./src/app/comp/auth/auth.component.html"),
             styles: [__webpack_require__(/*! ./auth.component.css */ "./src/app/comp/auth/auth.component.css")]
         }),
-        __metadata("design:paramtypes", [angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__["AngularFireAuth"]])
+        __metadata("design:paramtypes", [angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__["AngularFireAuth"], _service_test_service__WEBPACK_IMPORTED_MODULE_3__["TestService"]])
     ], AuthComponent);
     return AuthComponent;
 }());
@@ -378,7 +410,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  quiz works!\n</p>\n"
+module.exports = "<p>\n  quiz works!\n</p>\n<button (click)=\"testLog()\">pokaz tekst</button>\n"
 
 /***/ }),
 
@@ -393,6 +425,7 @@ module.exports = "<p>\n  quiz works!\n</p>\n"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuizComponent", function() { return QuizComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _service_test_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../service/test.service */ "./src/app/service/test.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -403,9 +436,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var QuizComponent = /** @class */ (function () {
-    function QuizComponent() {
+    function QuizComponent(test) {
+        this.test = test;
     }
+    QuizComponent.prototype.testLog = function () {
+        alert(this.test.czyZalogowany);
+    };
     QuizComponent.prototype.ngOnInit = function () {
     };
     QuizComponent = __decorate([
@@ -414,7 +452,7 @@ var QuizComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./quiz.component.html */ "./src/app/comp/quiz/quiz.component.html"),
             styles: [__webpack_require__(/*! ./quiz.component.css */ "./src/app/comp/quiz/quiz.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_service_test_service__WEBPACK_IMPORTED_MODULE_1__["TestService"]])
     ], QuizComponent);
     return QuizComponent;
 }());
@@ -441,7 +479,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<youtube-player\n     [videoId]=\"id\"\n     (ready)=\"savePlayer($event)\"\n     (change)=\"onStateChange($event)\"\n   ></youtube-player>\n"
+module.exports = "<h3>dzialam youtube</h3>\n<youtube-player\n     [videoId]=\"id\"\n     (ready)=\"savePlayer($event)\"\n     (change)=\"onStateChange($event)\"\n   ></youtube-player>\n"
 
 /***/ }),
 
@@ -488,6 +526,50 @@ var YoutubeComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], YoutubeComponent);
     return YoutubeComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/service/test.service.ts":
+/*!*****************************************!*\
+  !*** ./src/app/service/test.service.ts ***!
+  \*****************************************/
+/*! exports provided: TestService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestService", function() { return TestService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var TestService = /** @class */ (function () {
+    function TestService(afAuth) {
+        this.afAuth = afAuth;
+        this.czyZalogowany = false;
+    }
+    TestService.prototype.pokazTekst = function () {
+        console.log(this.tekst);
+    };
+    TestService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [angularfire2_auth__WEBPACK_IMPORTED_MODULE_1__["AngularFireAuth"]])
+    ], TestService);
+    return TestService;
 }());
 
 

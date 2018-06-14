@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<h1>angielski test</h1>\n\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <app-quiz></app-quiz>\n    <app-youtube></app-youtube>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n\n<div *ngIf=\"pokaz\">\n  <div class=\"form-group\" >\n    <div class=\"form-group\">\n      <label for=\"exampleInputEmail1\" >Email address</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"user.email\" placeholder=\"Email\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"exampleInputPassword1\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"user.password\" placeholder=\"Password\" required>\n    </div>\n   <button type=\"buton\" class=\"btn btn-primary btn-block\" style=\"margin-bottom: 20px\" (click)=\"signInWithEmail()\" [disabled]=\"formCtrl.form.invalid\">\n\n   Login with Email\n\n     </button>\n  </div>\n</div>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<h1>angielski test</h1>\n\n<div *ngIf=\"afAuth.user | async as user; else showLogin\">\n    <h1>Hello {{ user.displayName }}!</h1>\n    <app-menu></app-menu>\n    <button (click)=\"logout()\">Logout</button>\n  </div>\n\n<div *ngIf=\"pokaz\">\n  <div class=\"form-group\" >\n    <div class=\"form-group\">\n      <label for=\"exampleInputEmail1\" >Email address</label>\n      <input type=\"email\" class=\"form-control\" [(ngModel)]=\"user.email\" placeholder=\"Email\" required>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"exampleInputPassword1\">Password</label>\n      <input type=\"password\" class=\"form-control\" [(ngModel)]=\"user.password\" placeholder=\"Password\" required>\n    </div>\n   <button type=\"buton\" class=\"btn btn-primary btn-block\" style=\"margin-bottom: 20px\" (click)=\"signInWithEmail()\" [disabled]=\"formCtrl.form.invalid\">\n\n   Login with Email\n\n     </button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -76,6 +76,7 @@ var AppComponent = /** @class */ (function () {
             email: '',
             password: ''
         };
+        this.logout();
         this.pokaz = true;
     }
     AppComponent.prototype.logout = function () {
@@ -136,6 +137,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _comp_auth_auth_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./comp/auth/auth.component */ "./src/app/comp/auth/auth.component.ts");
 /* harmony import */ var _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./comp/quiz/quiz.component */ "./src/app/comp/quiz/quiz.component.ts");
+/* harmony import */ var _comp_menu_menu_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./comp/menu/menu.component */ "./src/app/comp/menu/menu.component.ts");
+/* harmony import */ var _comp_slowka_slowka_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./comp/slowka/slowka.component */ "./src/app/comp/slowka/slowka.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -160,6 +163,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -170,7 +175,9 @@ var AppModule = /** @class */ (function () {
                 _comp_youtube_youtube_component__WEBPACK_IMPORTED_MODULE_6__["YoutubeComponent"],
                 _comp_dbtest_dbtest_component__WEBPACK_IMPORTED_MODULE_7__["DbtestComponent"],
                 _comp_auth_auth_component__WEBPACK_IMPORTED_MODULE_14__["AuthComponent"],
-                _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__["QuizComponent"]
+                _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__["QuizComponent"],
+                _comp_menu_menu_component__WEBPACK_IMPORTED_MODULE_16__["MenuComponent"],
+                _comp_slowka_slowka_component__WEBPACK_IMPORTED_MODULE_17__["SlowkaComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -392,6 +399,79 @@ var DbtestComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/comp/menu/menu.component.css":
+/*!**********************************************!*\
+  !*** ./src/app/comp/menu/menu.component.css ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/comp/menu/menu.component.html":
+/*!***********************************************!*\
+  !*** ./src/app/comp/menu/menu.component.html ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n<div class=\"menu\" *ngIf=\"Menu\">\n  <div><button type=\"button\" name=\"button\" (click)=\"podakazSlowka()\">slowka</button></div>\n  <div><button type=\"button\" name=\"button\">youtube</button></div>\n  <div><button type=\"button\" name=\"button\">audi</button></div>\n  <div><button type=\"button\" name=\"button\">bmw</button></div>\n</div>\n\n<div *ngIf=\"Slowka\">\n  <app-slowka></app-slowka>\n  <div>\n    <button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">menu</button>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/comp/menu/menu.component.ts":
+/*!*********************************************!*\
+  !*** ./src/app/comp/menu/menu.component.ts ***!
+  \*********************************************/
+/*! exports provided: MenuComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MenuComponent", function() { return MenuComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var MenuComponent = /** @class */ (function () {
+    function MenuComponent() {
+        this.Menu = true;
+        this.Slowka = false;
+    }
+    MenuComponent.prototype.ngOnInit = function () {
+    };
+    MenuComponent.prototype.pokazMenu = function () {
+        this.Slowka = false;
+        this.Menu = true;
+    };
+    MenuComponent.prototype.podakazSlowka = function () {
+        this.Slowka = true;
+        this.Menu = false;
+    };
+    MenuComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-menu',
+            template: __webpack_require__(/*! ./menu.component.html */ "./src/app/comp/menu/menu.component.html"),
+            styles: [__webpack_require__(/*! ./menu.component.css */ "./src/app/comp/menu/menu.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], MenuComponent);
+    return MenuComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/comp/quiz/quiz.component.css":
 /*!**********************************************!*\
   !*** ./src/app/comp/quiz/quiz.component.css ***!
@@ -455,6 +535,75 @@ var QuizComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_service_test_service__WEBPACK_IMPORTED_MODULE_1__["TestService"]])
     ], QuizComponent);
     return QuizComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/comp/slowka/slowka.component.css":
+/*!**************************************************!*\
+  !*** ./src/app/comp/slowka/slowka.component.css ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/comp/slowka/slowka.component.html":
+/*!***************************************************!*\
+  !*** ./src/app/comp/slowka/slowka.component.html ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p id=\"tekst\">\n  app slowka dziala\n</p>\n<button type=\"button\" name=\"button\"> takie tam</button>\n"
+
+/***/ }),
+
+/***/ "./src/app/comp/slowka/slowka.component.ts":
+/*!*************************************************!*\
+  !*** ./src/app/comp/slowka/slowka.component.ts ***!
+  \*************************************************/
+/*! exports provided: SlowkaComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SlowkaComponent", function() { return SlowkaComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SlowkaComponent = /** @class */ (function () {
+    function SlowkaComponent() {
+        jquery__WEBPACK_IMPORTED_MODULE_1__(document).ready(function () {
+            alert("dzialam");
+        });
+    }
+    SlowkaComponent.prototype.ngOnInit = function () {
+    };
+    SlowkaComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-slowka',
+            template: __webpack_require__(/*! ./slowka.component.html */ "./src/app/comp/slowka/slowka.component.html"),
+            styles: [__webpack_require__(/*! ./slowka.component.css */ "./src/app/comp/slowka/slowka.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SlowkaComponent);
+    return SlowkaComponent;
 }());
 
 

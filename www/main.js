@@ -139,6 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./comp/quiz/quiz.component */ "./src/app/comp/quiz/quiz.component.ts");
 /* harmony import */ var _comp_menu_menu_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./comp/menu/menu.component */ "./src/app/comp/menu/menu.component.ts");
 /* harmony import */ var _comp_slowka_slowka_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./comp/slowka/slowka.component */ "./src/app/comp/slowka/slowka.component.ts");
+/* harmony import */ var _comp_film_menu_film_menu_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./comp/film-menu/film-menu.component */ "./src/app/comp/film-menu/film-menu.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -165,6 +166,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -177,7 +179,8 @@ var AppModule = /** @class */ (function () {
                 _comp_auth_auth_component__WEBPACK_IMPORTED_MODULE_14__["AuthComponent"],
                 _comp_quiz_quiz_component__WEBPACK_IMPORTED_MODULE_15__["QuizComponent"],
                 _comp_menu_menu_component__WEBPACK_IMPORTED_MODULE_16__["MenuComponent"],
-                _comp_slowka_slowka_component__WEBPACK_IMPORTED_MODULE_17__["SlowkaComponent"]
+                _comp_slowka_slowka_component__WEBPACK_IMPORTED_MODULE_17__["SlowkaComponent"],
+                _comp_film_menu_film_menu_component__WEBPACK_IMPORTED_MODULE_18__["FilmMenuComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -399,6 +402,112 @@ var DbtestComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/comp/film-menu/film-menu.component.css":
+/*!********************************************************!*\
+  !*** ./src/app/comp/film-menu/film-menu.component.css ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/comp/film-menu/film-menu.component.html":
+/*!*********************************************************!*\
+  !*** ./src/app/comp/film-menu/film-menu.component.html ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"menu\" *ngIf=\"menuFilm\">\n  <div><button type=\"button\" name=\"button\" (click)=\"pierwszyMenu()\">pierwszy</button></div>\n  <div><button type=\"button\" name=\"button\" (click)=\"drugiMenu()\">drugi</button></div>\n  <div><button type=\"button\" name=\"button\" (click)=\"trzeciMenu()\">trzeci</button></div>\n  <div><button type=\"button\" name=\"button\" (click)=\"czwartyMenu()\">czwarty</button></div>\n</div>\n\n<div *ngIf=\"pierwszy\">\n  <app-youtube id=\"sKTHh08KuXk\" (voted)=\"onVoted($event)\"></app-youtube>\n  <div><button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">pokaz menu filmu</button></div>\n</div>\n<div *ngIf=\"drugi\">\n  drugi\n  <div><button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">pokaz menu filmu</button></div>\n</div>\n<div *ngIf=\"trzeci\">\n  trzeci\n  <div><button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">pokaz menu filmu</button></div>\n</div>\n<div *ngIf=\"czwarty\">\n  pierwszy\n  <div><button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">pokaz menu filmu</button></div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/comp/film-menu/film-menu.component.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/comp/film-menu/film-menu.component.ts ***!
+  \*******************************************************/
+/*! exports provided: FilmMenuComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FilmMenuComponent", function() { return FilmMenuComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var FilmMenuComponent = /** @class */ (function () {
+    function FilmMenuComponent() {
+        this.menuFilm = true;
+        this.pierwszy = false;
+        this.drugi = false;
+        this.trzeci = false;
+        this.czwarty = false;
+    }
+    FilmMenuComponent.prototype.pierwszyMenu = function () {
+        this.menuFilm = false;
+        this.pierwszy = true;
+        this.drugi = false;
+        this.trzeci = false;
+        this.czwarty = false;
+    };
+    FilmMenuComponent.prototype.drugiMenu = function () {
+        this.menuFilm = false;
+        this.pierwszy = false;
+        this.drugi = true;
+        this.trzeci = false;
+        this.czwarty = false;
+    };
+    FilmMenuComponent.prototype.trzeciMenu = function () {
+        this.menuFilm = false;
+        this.pierwszy = false;
+        this.drugi = false;
+        this.trzeci = true;
+        this.czwarty = false;
+    };
+    FilmMenuComponent.prototype.czwartyMenu = function () {
+        this.menuFilm = false;
+        this.pierwszy = false;
+        this.drugi = false;
+        this.trzeci = false;
+        this.czwarty = true;
+    };
+    FilmMenuComponent.prototype.pokazMenu = function () {
+        this.menuFilm = true;
+        this.pierwszy = false;
+        this.drugi = false;
+        this.trzeci = false;
+        this.czwarty = false;
+    };
+    FilmMenuComponent.prototype.onVoted = function (agreed) {
+        alert("konice");
+    };
+    FilmMenuComponent.prototype.ngOnInit = function () {
+    };
+    FilmMenuComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-film-menu',
+            template: __webpack_require__(/*! ./film-menu.component.html */ "./src/app/comp/film-menu/film-menu.component.html"),
+            styles: [__webpack_require__(/*! ./film-menu.component.css */ "./src/app/comp/film-menu/film-menu.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], FilmMenuComponent);
+    return FilmMenuComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/comp/menu/menu.component.css":
 /*!**********************************************!*\
   !*** ./src/app/comp/menu/menu.component.css ***!
@@ -417,7 +526,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"menu\" *ngIf=\"Menu\">\n  <div><button type=\"button\" name=\"button\" (click)=\"podakazSlowka()\">slowka</button></div>\n  <div><button type=\"button\" name=\"button\">youtube</button></div>\n  <div><button type=\"button\" name=\"button\">audi</button></div>\n  <div><button type=\"button\" name=\"button\">bmw</button></div>\n</div>\n\n<div *ngIf=\"Slowka\">\n  <app-slowka></app-slowka>\n  <div>\n    <button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">menu</button>\n  </div>\n</div>\n"
+module.exports = "\n<div class=\"menu\" *ngIf=\"Menu\">\n  <div><button type=\"button\" name=\"button\" (click)=\"podakazSlowka()\">slowka</button></div>\n  <div><button type=\"button\" name=\"button\" (click)=\"pokazYoutube()\">youtube menu</button></div>\n  <div><button type=\"button\" name=\"button\">audi</button></div>\n  <div><button type=\"button\" name=\"button\">bmw</button></div>\n</div>\n\n<div *ngIf=\"Slowka\">\n  <app-slowka></app-slowka>\n  <div>\n    <button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">menu</button>\n  </div>\n\n</div>\n<div *ngIf=\"filmMenu\">\n  <app-film-menu></app-film-menu>\n\n  <div>\n    <button type=\"button\" name=\"button\" (click)=\"pokazMenu()\">menu</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -446,16 +555,24 @@ var MenuComponent = /** @class */ (function () {
     function MenuComponent() {
         this.Menu = true;
         this.Slowka = false;
+        this.filmMenu = false;
     }
     MenuComponent.prototype.ngOnInit = function () {
     };
     MenuComponent.prototype.pokazMenu = function () {
-        this.Slowka = false;
         this.Menu = true;
+        this.Slowka = false;
+        this.filmMenu = false;
     };
     MenuComponent.prototype.podakazSlowka = function () {
         this.Slowka = true;
         this.Menu = false;
+        this.filmMenu = false;
+    };
+    MenuComponent.prototype.pokazYoutube = function () {
+        this.Slowka = false;
+        this.Menu = false;
+        this.filmMenu = true;
     };
     MenuComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -655,9 +772,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var YoutubeComponent = /** @class */ (function () {
     function YoutubeComponent() {
-        this.id = 'qDuKsiwS5xw';
+        this.id = null;
+        this.voted = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     YoutubeComponent.prototype.ngOnInit = function () {
+    };
+    YoutubeComponent.prototype.vote = function (agreed) {
+        this.voted.emit(agreed);
     };
     YoutubeComponent.prototype.savePlayer = function (player) {
         this.player = player;
@@ -665,7 +786,18 @@ var YoutubeComponent = /** @class */ (function () {
     };
     YoutubeComponent.prototype.onStateChange = function (event) {
         console.log('player state', event.data);
+        if (event.data == 0) {
+            this.vote(true);
+        }
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], YoutubeComponent.prototype, "id", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], YoutubeComponent.prototype, "voted", void 0);
     YoutubeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-youtube',

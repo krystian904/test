@@ -709,11 +709,11 @@ var SlowkaComponent = /** @class */ (function () {
         var tabZnakow;
         var szukaneSlowo = "";
         var corectSound = new Audio();
-        corectSound.src = "../../../assets/Correct-answer.mp3";
+        corectSound.src = "./assets/Correct-answer.mp3";
         var wrongSound = new Audio();
-        wrongSound.src = "../../../assets/bed.mp3";
+        wrongSound.src = "./assets/bed.mp3";
         var btnSound = new Audio();
-        btnSound.src = "../../../assets/btn.mp3";
+        btnSound.src = "./assets/btn.mp3";
         var text;
         var btnTab = [];
         var temp2 = jquery__WEBPACK_IMPORTED_MODULE_1__("#odp").empty();
@@ -774,11 +774,6 @@ var SlowkaComponent = /** @class */ (function () {
             var szablonZapytan = "https://sjp.pwn.pl/szukaj/";
             pelneZapytanie = szablonZapytan + szukaneSlowo;
             console.log(pelneZapytanie);
-            var Imageurl = "https://www.google.pl/search?q=" + szukaneSlowo + "&source=lnms&tbm=isch&sa=X&ved=0ahUKEwipj7_ysd3aAhXFKCwKHQ9eCCIQ_AUICigB&biw=1680&bih=870";
-            jquery__WEBPACK_IMPORTED_MODULE_1__["get"](Imageurl, function (data) {
-                jquery__WEBPACK_IMPORTED_MODULE_1__("#image").html(data);
-            });
-            jquery__WEBPACK_IMPORTED_MODULE_1__("#image").html(Imageurl);
             var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
                 + "pl" + "&tl=" + "en" + "&dt=t&q=" + szukaneSlowo;
             jquery__WEBPACK_IMPORTED_MODULE_1__["get"](url, function (data) {

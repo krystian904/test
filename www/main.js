@@ -676,7 +676,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p id=\"tekst\">\n  app slowka dziala\n</p>\n<button type=\"button\" name=\"button\"> takie tam</button>\n"
+module.exports = "<h1>MASTER OF WORDS </h1>\n\n<button id=\"btnSerch\" type=\"button\">Szukaj</button>\n\n\n<div id=\"wraper\"></div>\n<input type=\"text\" id=\"szukaj\"><span>Wprowadz szukane slowo</span>\n\n\n\n\n<div id=\"wynik\"></div>\n<br>\n<div id=\"odp\"></div>\n\n<br>\n<div id=\"image\"></div>\n"
 
 /***/ }),
 
@@ -706,8 +706,145 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var SlowkaComponent = /** @class */ (function () {
     function SlowkaComponent() {
+        var tabZnakow;
+        var szukaneSlowo = "";
+        var corectSound = new Audio();
+        corectSound.src = "../../../assets/Correct-answer.mp3";
+        var wrongSound = new Audio();
+        wrongSound.src = "../../../assets/bed.mp3";
+        var btnSound = new Audio();
+        btnSound.src = "../../../assets/btn.mp3";
+        var text;
+        var btnTab = [];
+        var temp2 = jquery__WEBPACK_IMPORTED_MODULE_1__("#odp").empty();
+        var divAnser = [];
+        var btnTab = [];
+        function drawTable(aTab) {
+            var temp1 = jquery__WEBPACK_IMPORTED_MODULE_1__("#wynik").empty();
+            var len = aTab.length;
+            for (var i = 0; i < len; i++) {
+                var btn = document.createElement("BUTTON");
+                jquery__WEBPACK_IMPORTED_MODULE_1__(btn).html(aTab[i]);
+                btn.style.width = "60px";
+                btn.style.height = "60px";
+                btn.style.display = "inline";
+                btn.style.padding = "12px 12px";
+                btn.style.borderWidth = "1px";
+                btn.style.borderStyle = "outset";
+                btn.style.fontSize = "40px";
+                btn.style.margin = "10px";
+                btn.style.borderRadius = "5px";
+                btnTab.push(btn);
+                temp1.append(btn);
+            }
+        }
+        /**
+         * Shuffles array in place.
+         * @param {Array} a items An array containing the items.
+         */
+        function shuffle(a) {
+            var j, x, i;
+            for (i = a.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        }
+        function klik(vAl) {
+        }
+        function chek(word, anseer) {
+            if (word === anseer) {
+                return true;
+            }
+            if (word !== anseer) {
+                return false;
+            }
+        }
+        var pelneZapytanie = "";
+        function loadDoc() {
+            var aWord;
+            aWord = jquery__WEBPACK_IMPORTED_MODULE_1__("#szukaj").val();
+            if (typeof aWord !== "string" || aWord === undefined || aWord === null) {
+                return "nieprwidlowy argument, podany argument musi byc typu string";
+            }
+            console.log(aWord);
+            var szukaneSlowo = aWord;
+            var szablonZapytan = "https://sjp.pwn.pl/szukaj/";
+            pelneZapytanie = szablonZapytan + szukaneSlowo;
+            console.log(pelneZapytanie);
+            var Imageurl = "https://www.google.pl/search?q=" + szukaneSlowo + "&source=lnms&tbm=isch&sa=X&ved=0ahUKEwipj7_ysd3aAhXFKCwKHQ9eCCIQ_AUICigB&biw=1680&bih=870";
+            jquery__WEBPACK_IMPORTED_MODULE_1__["get"](Imageurl, function (data) {
+                jquery__WEBPACK_IMPORTED_MODULE_1__("#image").html(data);
+            });
+            jquery__WEBPACK_IMPORTED_MODULE_1__("#image").html(Imageurl);
+            var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
+                + "pl" + "&tl=" + "en" + "&dt=t&q=" + szukaneSlowo;
+            jquery__WEBPACK_IMPORTED_MODULE_1__["get"](url, function (data) {
+                text = data;
+                tabZnakow = text[0][0][0].toString();
+                var testIstnienia = text[0][0][1];
+                console.log("Słowo  " + tabZnakow + " istnieje ? : " + (testIstnienia !== tabZnakow));
+                var tab = tabZnakow.split('');
+                console.log(tab);
+                var rantab = shuffle(tab);
+                console.log(rantab);
+                drawTable(rantab);
+                btnTab.forEach(function (element) {
+                    jquery__WEBPACK_IMPORTED_MODULE_1__(element).on("click", function () {
+                        var t = jquery__WEBPACK_IMPORTED_MODULE_1__(element).html();
+                        var ans = document.createElement("div");
+                        ans.style.width = "60px";
+                        ans.style.height = "60px";
+                        ans.style.display = "inline";
+                        ans.style.padding = "12px 12px";
+                        ans.style.borderWidth = "1px";
+                        ans.style.borderStyle = "outset";
+                        jquery__WEBPACK_IMPORTED_MODULE_1__(ans).html(t);
+                        divAnser.push(t);
+                        temp2.append(ans);
+                        jquery__WEBPACK_IMPORTED_MODULE_1__(element).off();
+                        jquery__WEBPACK_IMPORTED_MODULE_1__(element).attr("disabled", true);
+                        btnSound.play();
+                        var dlugoscBtnTab = btnTab.length;
+                        var licznik = 0;
+                        for (var index = 0; index < dlugoscBtnTab; index++) {
+                            var element_1 = btnTab[index];
+                            if (jquery__WEBPACK_IMPORTED_MODULE_1__(element_1).attr("disabled")) {
+                                licznik = licznik + 1;
+                            }
+                        }
+                        if (licznik === dlugoscBtnTab) {
+                            console.log("koniec ");
+                            console.log(divAnser.join("") + "  DIV ANSER JOIN REZULTAT ");
+                            if (chek(divAnser.join(""), tabZnakow)) {
+                                console.log("BRAAAAWO WYGRLES");
+                                corectSound.play();
+                                jquery__WEBPACK_IMPORTED_MODULE_1__("#odp").children().css("background-color", "green");
+                            }
+                            else {
+                                jquery__WEBPACK_IMPORTED_MODULE_1__("#odp").children().css("background-color", "red");
+                                navigator.vibrate(1000);
+                                wrongSound.play();
+                                setTimeout(function () {
+                                    zerujOdpowiedz();
+                                    loadDoc();
+                                }, 4000);
+                            }
+                        }
+                    });
+                });
+            });
+        }
+        function zerujOdpowiedz() {
+            jquery__WEBPACK_IMPORTED_MODULE_1__("#odp").empty();
+        }
         jquery__WEBPACK_IMPORTED_MODULE_1__(document).ready(function () {
-            alert("dzialam");
+            jquery__WEBPACK_IMPORTED_MODULE_1__("#btnSerch").click(function () {
+                loadDoc();
+                zerujOdpowiedz();
+            });
         });
     }
     SlowkaComponent.prototype.ngOnInit = function () {
